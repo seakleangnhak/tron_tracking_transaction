@@ -46,6 +46,6 @@ def check():
 # check()
 while True:
     check()
-    time.sleep(10)
+    time.sleep(3)
     last_timestamp = current_timestamp
     current_timestamp = int(time.time()) * 1000
