@@ -2,10 +2,11 @@ import time
 import requests
 import json
 import pytz
-from datetime import datetime
 import urllib.parse
+from datetime import datetime
+from requests import HTTPError
 
-last_timestamp = (int(time.time()) - 10) * 1000
+last_timestamp = (int(time.time()) - 3) * 1000
 current_timestamp = int(time.time()) * 1000
 
 def check():
@@ -45,7 +46,10 @@ def check():
 
 # check()
 while True:
-    check()
+    try:
+        check()
+    except HTTPError as ex:
+        print(f"Error: {ex}")
     time.sleep(3)
     last_timestamp = current_timestamp
     current_timestamp = int(time.time()) * 1000
