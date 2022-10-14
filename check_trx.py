@@ -5,6 +5,7 @@ import pytz
 import urllib.parse
 import random
 import subprocess
+from PIL import Image
 from datetime import datetime
 from requests import HTTPError
 
@@ -54,11 +55,24 @@ def take_screenshot(hash: str, wait: int):
     print(f"Waiting Screenshot {wait} second")
     wait *= 1000
     subprocess.run(["shot-scraper", f"https://tronscan.org/#/transaction/{hash}", "-o", "photo.jpg", "--wait", f"{wait}"])
+    crop_photo()
     send_photo()
 
 # pip install shot-scraper
 # # Now install the browser it needs:
 # shot-scraper install
+
+def crop_photo():
+    img = Image.open(r"photo.jpg") 
+ 
+    left = random.randint(0, 150)
+    top = random.randint(50, 150)
+    right = random.randint(1294, 1424)
+    bottom = random.randint(650, 750)
+    
+    img_res = img.crop((left, top, right, bottom)) 
+    img_res = img_res.convert('RGB')
+    img_res.save("photo.jpg")
 
 def send_photo(image_caption=""):
     data = {"chat_id": "363937750", "caption": image_caption}
