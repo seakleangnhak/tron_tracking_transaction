@@ -56,11 +56,15 @@ def take_screenshot(hash: str, wait: int):
     subprocess.run(["shot-scraper", f"https://tronscan.org/#/transaction/{hash}", "-o", "photo.jpg", "--wait", f"{wait}"])
     send_photo()
 
+# pip install shot-scraper
+# # Now install the browser it needs:
+# shot-scraper install
+
 def send_photo(image_caption=""):
     data = {"chat_id": "363937750", "caption": image_caption}
-    url = "https://api.telegram.org/bot5659808871:AAECEr2xHQqT8eKpqwnV5OS7L7bULhYfJao/sendPhoto"
+    url = "https://api.telegram.org/bot5659808871:AAECEr2xHQqT8eKpqwnV5OS7L7bULhYfJao/sendDocument"
     with open("photo.jpg", "rb") as image_file:
-        requests.post(url, data=data, files={"photo": image_file})
+        requests.post(url, data=data, files={"document": image_file})
 
 # check()
 while True:
