@@ -3,10 +3,12 @@ import requests
 import json
 import pytz
 import urllib.parse
+import random
+import subprocess
 from datetime import datetime
 from requests import HTTPError
 
-last_timestamp = (int(time.time()) - 3) * 1000
+last_timestamp = (int(time.time()) - 600) * 1000
 current_timestamp = int(time.time()) * 1000
 
 def check():
@@ -43,6 +45,20 @@ def check():
                 )
 
                 requests.get(url=tg_url)
+                take_screenshot(hash=hash)
+
+
+def take_screenshot(hash: str):
+    wait = random.randint(3, 15)
+    time.sleep(wait)
+    subprocess.run(["shot-scraper", f"https://tronscan.org/#/transaction/{hash}", "-o", "photo.jpg", "--wait", "3000"])
+    send_photo()
+
+def send_photo(image_caption=""):
+    data = {"chat_id": "363937750", "caption": image_caption}
+    url = "https://api.telegram.org/bot5659808871:AAECEr2xHQqT8eKpqwnV5OS7L7bULhYfJao/sendPhoto"
+    with open("photo.jpg", "rb") as image_file:
+        requests.post(url, data=data, files={"photo": image_file})
 
 # check()
 while True:
