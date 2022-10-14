@@ -11,3 +11,6 @@ venv.bak/
 *.png
 *.jpg
 *.jpeg
+
+# IDE
+.vscode
