@@ -2,10 +2,13 @@ import time
 import requests
 import json
 import pytz
-from datetime import datetime
 import urllib.parse
+import random
+import subprocess
+from datetime import datetime
+from requests import HTTPError
 
-last_timestamp = (int(time.time()) - 10) * 1000
+last_timestamp = (int(time.time()) - 3) * 1000
 current_timestamp = int(time.time()) * 1000
 
 def check():
@@ -31,21 +34,40 @@ def check():
                 timestamp = int(data["timestamp"] / 1000)
                 date = datetime.fromtimestamp(timestamp, tz=pytz.timezone('Asia/Phnom_Penh'))
                 amount = int(data["trigger_info"]["parameter"]["_value"]) / (10 ** 6)
+                wait = random.randint(3, 15)
 
                 tg_url = (
                     "https://api.telegram.org/bot5659808871:AAECEr2xHQqT8eKpqwnV5OS7L7bULhYfJao/sendMessage?chat_id=363937750&parse_mode=markdown&text="
                     ">>>>>>>>>>New Deposit<<<<<<<<<<\n"
                     f"Date: {date}\n"
                     f"Confirmed: {confirmed}\n"
-                    f"Amount: {amount}USDT\n\n"
+                    f"Amount: {amount}USDT\n"
+                    f"Screenshot wait: {wait} second\n\n"
                     f"[Click to Open]({check_url})"
                 )
 
                 requests.get(url=tg_url)
+                take_screenshot(hash=hash, wait=wait)
+
+
+def take_screenshot(hash: str, wait: int):
+    print(f"Waiting Screenshot {wait} second")
+    wait *= 1000
+    subprocess.run(["shot-scraper", f"https://tronscan.org/#/transaction/{hash}", "-o", "photo.jpg", "--wait", f"{wait}"])
+    send_photo()
+
+def send_photo(image_caption=""):
+    data = {"chat_id": "363937750", "caption": image_caption}
+    url = "https://api.telegram.org/bot5659808871:AAECEr2xHQqT8eKpqwnV5OS7L7bULhYfJao/sendPhoto"
+    with open("photo.jpg", "rb") as image_file:
+        requests.post(url, data=data, files={"photo": image_file})
 
 # check()
 while True:
-    check()
-    time.sleep(10)
+    try:
+        check()
+    except HTTPError as ex:
+        print(f"Error: {ex}")
+    time.sleep(3)
     last_timestamp = current_timestamp
     current_timestamp = int(time.time()) * 1000
