@@ -8,7 +8,7 @@ import subprocess
 from datetime import datetime
 from requests import HTTPError
 
-last_timestamp = (int(time.time()) - 700) * 1000
+last_timestamp = (int(time.time()) - 2400) * 1000
 current_timestamp = int(time.time()) * 1000
 
 def check():
