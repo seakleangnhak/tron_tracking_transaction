@@ -34,6 +34,7 @@ def check():
                 timestamp = int(data["timestamp"] / 1000)
                 date = datetime.fromtimestamp(timestamp, tz=pytz.timezone('Asia/Phnom_Penh'))
                 amount = int(data["trigger_info"]["parameter"]["_value"]) / (10 ** 6)
+                wait = random.randint(3, 15)
 
                 tg_url = (
                     "https://api.telegram.org/bot5659808871:AAECEr2xHQqT8eKpqwnV5OS7L7bULhYfJao/sendMessage?chat_id=363937750&parse_mode=markdown&text="
@@ -41,17 +42,18 @@ def check():
                     f"Date: {date}\n"
                     f"Confirmed: {confirmed}\n"
                     f"Amount: {amount}USDT\n\n"
+                    f"Screenshot wait: {wait} second\n"
                     f"[Click to Open]({check_url})"
                 )
 
                 requests.get(url=tg_url)
-                take_screenshot(hash=hash)
+                take_screenshot(hash=hash, wait=wait)
 
 
-def take_screenshot(hash: str):
-    wait = random.randint(3, 15)
-    time.sleep(wait)
-    subprocess.run(["shot-scraper", f"https://tronscan.org/#/transaction/{hash}", "-o", "photo.jpg", "--wait", "3000"])
+def take_screenshot(hash: str, wait: int):
+    print(f"Waiting Screenshot {wait} second")
+    wait *= 1000
+    subprocess.run(["shot-scraper", f"https://tronscan.org/#/transaction/{hash}", "-o", "photo.jpg", "--wait", f"{wait}"])
     send_photo()
 
 def send_photo(image_caption=""):
