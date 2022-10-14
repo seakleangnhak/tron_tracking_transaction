@@ -8,7 +8,7 @@ import subprocess
 from datetime import datetime
 from requests import HTTPError
 
-last_timestamp = (int(time.time()) - 2400) * 1000
+last_timestamp = (int(time.time()) - 3) * 1000
 current_timestamp = int(time.time()) * 1000
 
 def check():
@@ -41,8 +41,8 @@ def check():
                     ">>>>>>>>>>New Deposit<<<<<<<<<<\n"
                     f"Date: {date}\n"
                     f"Confirmed: {confirmed}\n"
-                    f"Amount: {amount}USDT\n\n"
-                    f"Screenshot wait: {wait} second\n"
+                    f"Amount: {amount}USDT\n"
+                    f"Screenshot wait: {wait} second\n\n"
                     f"[Click to Open]({check_url})"
                 )
 
