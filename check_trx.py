@@ -15,7 +15,7 @@ current_timestamp = int(time.time()) * 1000
 def check():
 
     url = (
-        "https://apilist.tronscan.org/api/transaction?sort=-timestamp&count=true&limit=7&start=0&address=TXxqYjF2mjyDdHEmiadXiEiudkbL7nFmUZ"
+        "https://apilist.tronscan.org/api/transaction?sort=-timestamp&count=true&limit=100&start=0&address=TXxqYjF2mjyDdHEmiadXiEiudkbL7nFmUZ"
         f"&start_timestamp={last_timestamp}&end_timestamp={current_timestamp}"
     )
 
