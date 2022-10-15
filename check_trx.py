@@ -15,8 +15,8 @@ current_timestamp = int(time.time()) * 1000
 def check():
 
     url = (
-        "https://apilist.tronscan.org/api/transaction?sort=-timestamp&count=true&limit=200&start=0&address=TXxqYjF2mjyDdHEmiadXiEiudkbL7nFmUZ"
-        f"&start_timestamp={last_timestamp}&end_timestamp={current_timestamp}"
+        "https://apilist.tronscan.org/api/transaction?sort=-timestamp&count=true&limit=7&start=0&address=TXxqYjF2mjyDdHEmiadXiEiudkbL7nFmUZ"
+        # f"&start_timestamp={last_timestamp}&end_timestamp={current_timestamp}"
     )
 
     print(url)
@@ -28,7 +28,7 @@ def check():
 
     if len(reJson["data"]) > 0:
         for data in reJson["data"]:
-            if data["toAddress"] == "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t": #USDT address
+            if data["toAddress"] == "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t" and data["ownerAddress"] != "TXxqYjF2mjyDdHEmiadXiEiudkbL7nFmUZ": #USDT address
                 hash = data["hash"]
                 check_url = urllib.parse.quote(f"https://tronscan.org/#/transaction/{hash}")
                 confirmed = data["confirmed"]
