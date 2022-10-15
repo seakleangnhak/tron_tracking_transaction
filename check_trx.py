@@ -54,7 +54,7 @@ def check():
 def take_screenshot(hash: str, wait: int):
     print(f"Waiting Screenshot {wait} second")
     wait *= 1000
-    subprocess.run(["shot-scraper", f"https://tronscan.org/#/transaction/{hash}", "-o", "photo.jpg", "--wait", f"{wait}"])
+    subprocess.run(["shot-scraper", f"https://tronscan.org/#/transaction/{hash}", "-o", "photo.jpg", "--wait", f"{wait}", "--width", "1424", "--height", "750"])
     crop_photo()
     send_photo()
 
