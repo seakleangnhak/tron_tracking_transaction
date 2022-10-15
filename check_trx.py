@@ -16,7 +16,7 @@ def check():
 
     url = (
         "https://apilist.tronscan.org/api/transaction?sort=-timestamp&count=true&limit=7&start=0&address=TXxqYjF2mjyDdHEmiadXiEiudkbL7nFmUZ"
-        # f"&start_timestamp={last_timestamp}&end_timestamp={current_timestamp}"
+        f"&start_timestamp={last_timestamp}&end_timestamp={current_timestamp}"
     )
 
     print(url)
