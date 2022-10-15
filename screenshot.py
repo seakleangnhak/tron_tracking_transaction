@@ -6,9 +6,9 @@ subprocess.run([
     "-o", 
     "photo.jpg", 
     "--wait", 
-    "5000",
-    "--width",
-    "1424", 
-    "--height",
-    "750"
+    "5000"
+    # ,"--width",
+    # "1424", 
+    # "--height",
+    # "750"
     ])
